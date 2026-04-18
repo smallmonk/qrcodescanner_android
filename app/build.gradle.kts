@@ -11,7 +11,7 @@ android {
         applicationId = "com.proxedure.qrscanner"
         minSdk = 24
         targetSdk = 35
-        versionCode = 6
+        versionCode = 7
         versionName = "1.0.2"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"

@@ -2,7 +2,6 @@ package com.proxedure.qrscanner
 
 import android.Manifest
 import android.content.Intent
-import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -29,6 +28,7 @@ import coil.compose.AsyncImage
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import java.util.concurrent.Executors
+import androidx.core.net.toUri
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -160,13 +160,13 @@ fun ScannerScreen(
                 viewModel.clearResult()
             },
             onOpenUrl = { url ->
-                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url)).apply {
+                val intent = Intent(Intent.ACTION_VIEW, url.toUri()).apply {
                     setPackage("com.android.chrome")
                 }
                 try {
                     context.startActivity(intent)
                 } catch (e: Exception) {
-                    val fallbackIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                    val fallbackIntent = Intent(Intent.ACTION_VIEW, url.toUri())
                     try {
                         context.startActivity(fallbackIntent)
                     } catch (e2: Exception) {

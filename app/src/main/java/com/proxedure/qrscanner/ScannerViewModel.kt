@@ -10,7 +10,8 @@ data class ScannerState(
     val detectedValue: String? = null,
     val isUrl: Boolean = false,
     val showDialog: Boolean = false,
-    val isScanningEnabled: Boolean = false,
+    val isScanningEnabled: Boolean = true,
+    val isCameraActive: Boolean = true,
     val selectedImageUri: android.net.Uri? = null
 )
 
@@ -26,6 +27,7 @@ class ScannerViewModel : ViewModel() {
             isUrl = isUrl,
             showDialog = true,
             isScanningEnabled = false,
+            isCameraActive = false,
             selectedImageUri = imageUri
         )
     }
@@ -33,8 +35,16 @@ class ScannerViewModel : ViewModel() {
     fun startScanning() {
         _state.value = _state.value.copy(
             isScanningEnabled = true,
+            isCameraActive = true,
             detectedValue = null,
             selectedImageUri = null
+        )
+    }
+
+    fun stopCamera() {
+        _state.value = _state.value.copy(
+            isCameraActive = false,
+            isScanningEnabled = false
         )
     }
 
@@ -47,6 +57,8 @@ class ScannerViewModel : ViewModel() {
             detectedValue = null,
             isUrl = false,
             showDialog = false,
+            isScanningEnabled = true,
+            isCameraActive = true,
             selectedImageUri = null
         )
     }

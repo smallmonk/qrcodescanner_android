@@ -76,6 +76,7 @@ fun ScannerScreen(
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
+                    viewModel.stopCamera()
                     imagePickerLauncher.launch(
                         PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
                     )
@@ -98,7 +99,7 @@ fun ScannerScreen(
                     contentScale = ContentScale.Fit
                 )
             } else if (hasCameraPermission) {
-                if (state.isScanningEnabled || state.showDialog) {
+                if (state.isCameraActive) {
                     CameraPreview(
                         onQrCodeDetected = { viewModel.onQrCodeDetected(it) },
                         isDialogShowing = state.showDialog,
@@ -130,7 +131,16 @@ fun ScannerScreen(
                             shape = MaterialTheme.shapes.medium
                         )
                 ) {
-                    if (!state.isScanningEnabled && !state.showDialog) {
+                    if (state.isCameraActive) {
+                        if (state.isScanningEnabled) {
+                            Button(
+                                onClick = { viewModel.stopCamera() },
+                                modifier = Modifier.align(Alignment.Center)
+                            ) {
+                                Text("Stop Preview")
+                            }
+                        }
+                    } else if (!state.showDialog) {
                         Button(
                             onClick = { viewModel.startScanning() },
                             modifier = Modifier.align(Alignment.Center)

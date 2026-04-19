@@ -1,7 +1,6 @@
 package com.proxedure.qrscanner
 
 import android.Manifest
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult

@@ -11,12 +11,17 @@ android {
         applicationId = "com.proxedure.qrscanner"
         minSdk = 24
         targetSdk = 35
-        versionCode = 8
+        versionCode = 10
         versionName = "2.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
+        }
+        packaging {
+            jniLibs {
+                useLegacyPackaging = false
+            }
         }
     }
 
@@ -47,7 +52,7 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
         jniLibs {
-            useLegacyPackaging = true
+            useLegacyPackaging = false
         }
     }
 }
@@ -66,14 +71,14 @@ dependencies {
     implementation("androidx.compose.material:material-icons-extended")
 
     // CameraX
-    val cameraxVersion = "1.3.1"
+    val cameraxVersion = "1.4.0"
     implementation("androidx.camera:camera-core:$cameraxVersion")
     implementation("androidx.camera:camera-camera2:$cameraxVersion")
     implementation("androidx.camera:camera-lifecycle:$cameraxVersion")
     implementation("androidx.camera:camera-view:$cameraxVersion")
 
     // ML Kit Barcode Scanning
-    implementation("com.google.mlkit:barcode-scanning:17.2.0")
+    implementation("com.google.mlkit:barcode-scanning:17.3.0")
 
     // Coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")

@@ -164,18 +164,11 @@ fun ScannerScreen(
                 viewModel.clearResult()
             },
             onOpenUrl = { url ->
-                val intent = Intent(Intent.ACTION_VIEW, url.toUri()).apply {
-                    setPackage("com.android.chrome")
-                }
+                val intent = Intent(Intent.ACTION_VIEW, url.toUri())
                 try {
                     context.startActivity(intent)
                 } catch (e: Exception) {
-                    val fallbackIntent = Intent(Intent.ACTION_VIEW, url.toUri())
-                    try {
-                        context.startActivity(fallbackIntent)
-                    } catch (e2: Exception) {
-                        // Handle no browser available
-                    }
+                    // Handle no browser available
                 }
             }
         )
@@ -278,7 +271,7 @@ fun ResultDialog(
         confirmButton = {
             if (isUrl) {
                 Button(onClick = { onOpenUrl(content) }) {
-                    Text("Open in Google Chrome")
+                    Text("Open in Browser")
                 }
             }
         },

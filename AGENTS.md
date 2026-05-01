@@ -35,6 +35,9 @@
 - **Image Loading**: Coil
 - **Architecture**: MVVM
 
+## Agent Routine
+- **Documentation Maintenance**: After each change, review whether `README.md` and `AGENTS.md` should be modified to reflect the latest updates.
+
 ## Pending / Future Tasks
 - [ ] Implement Scan History.
 - [x] Enhance WiFi QR code parsing and connection logic.

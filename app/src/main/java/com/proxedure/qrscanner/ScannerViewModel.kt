@@ -35,14 +35,15 @@ class ScannerViewModel : ViewModel() {
         )
     }
 
-    fun onNoQrCodeDetected() {
+    fun onNoQrCodeDetected(imageUri: android.net.Uri? = null) {
         _state.value = _state.value.copy(
             detectedValue = null,
             isUrl = false,
             isWifi = false,
             showDialog = true,
             isScanningEnabled = false,
-            isCameraActive = false
+            isCameraActive = false,
+            selectedImageUri = imageUri
         )
     }
 
@@ -67,13 +68,14 @@ class ScannerViewModel : ViewModel() {
     }
 
     fun clearResult() {
+        val wasFromImage = _state.value.selectedImageUri != null
         _state.value = _state.value.copy(
             detectedValue = null,
             isUrl = false,
             isWifi = false,
             showDialog = false,
-            isScanningEnabled = true,
-            isCameraActive = true,
+            isScanningEnabled = !wasFromImage,
+            isCameraActive = !wasFromImage,
             selectedImageUri = null
         )
     }

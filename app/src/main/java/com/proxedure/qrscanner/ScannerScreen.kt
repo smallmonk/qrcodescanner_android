@@ -124,7 +124,7 @@ fun ScannerScreen(
                     if (result != null) {
                         viewModel.onQrCodeDetected(result, uri)
                     } else {
-                        viewModel.onNoQrCodeDetected()
+                        viewModel.onNoQrCodeDetected(uri)
                     }
                 }
             }

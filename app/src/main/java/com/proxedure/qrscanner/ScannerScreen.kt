@@ -32,7 +32,6 @@ import coil.compose.AsyncImage
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import java.util.concurrent.Executors
-import android.net.wifi.WifiManager
 import android.net.wifi.WifiInfo
 import android.net.wifi.WifiNetworkSuggestion
 import android.net.ConnectivityManager
@@ -78,7 +77,9 @@ fun ScannerScreen(
                     val handler = Handler(Looper.getMainLooper())
                     var isUnregistered = false
 
-                    val callback = object : ConnectivityManager.NetworkCallback(ConnectivityManager.NetworkCallback.FLAG_INCLUDE_LOCATION_INFO) {
+                    val callback = object : ConnectivityManager.NetworkCallback(
+                        FLAG_INCLUDE_LOCATION_INFO
+                    ) {
                         override fun onCapabilitiesChanged(network: Network, capabilities: NetworkCapabilities) {
                             val wifiInfo = capabilities.transportInfo as? WifiInfo
                             val currentSsid = wifiInfo?.ssid?.removeSurrounding("\"")
@@ -280,8 +281,6 @@ private fun connectToWifi(
     config: WifiConfig,
     launcher: ActivityResultLauncher<Intent>
 ) {
-    val wifiManager = context.applicationContext.getSystemService(android.content.Context.WIFI_SERVICE) as WifiManager
-
     // 1. Add as a high-priority suggestion for persistent connectivity and autojoin.
     // Suggestions are the modern way to ensure the system connects to and remembers a network.
     val suggestionBuilder = WifiNetworkSuggestion.Builder()
@@ -320,7 +319,6 @@ fun CameraPreview(
     isDialogShowing: Boolean,
     isScanningEnabled: Boolean
 ) {
-    val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
 
     val analyzer = remember {
@@ -363,7 +361,7 @@ fun CameraPreview(
                 val cameraProvider = cameraProviderFuture.get()
 
                 val preview = Preview.Builder().build().also {
-                    it.setSurfaceProvider(previewView.surfaceProvider)
+                    it.surfaceProvider = previewView.surfaceProvider
                 }
 
                 val imageAnalysis = ImageAnalysis.Builder()

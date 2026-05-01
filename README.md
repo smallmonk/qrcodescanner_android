@@ -4,6 +4,7 @@ A simple and efficient Android application for scanning QR codes using Jetpack C
 
 ## Features
 
+- **Wi-Fi Connectivity (Android 12+)**: Automatically parses Wi-Fi QR codes and facilitates persistent connections using `WifiNetworkSuggestion` and the system's "Add Networks" interface. Includes real-time connection verification.
 - **Live Camera Scanning**: Real-time QR code detection using the device's back camera.
 - **Image Import**: Scan QR codes from images stored in your device's gallery.
 - **Pinch-to-Zoom**: Easily zoom in and out during live scanning using scale gestures.
@@ -12,7 +13,12 @@ A simple and efficient Android application for scanning QR codes using Jetpack C
     - Visual bounding box for targeting QR codes.
     - Start/Stop scanning controls to save battery and processing power.
     - Clear results display via dialogs.
-- **Permission Management**: Seamlessly handles camera permissions.
+- **Permission Management**: Seamlessly handles camera and location permissions (required for Wi-Fi SSID verification).
+
+## Requirements
+
+- **Minimum SDK**: Android 12 (API level 31)
+- **Permissions**: `CAMERA`, `ACCESS_FINE_LOCATION` (for Wi-Fi functionality)
 
 ## Technologies Used
 
@@ -29,5 +35,4 @@ A simple and efficient Android application for scanning QR codes using Jetpack C
 - `ScannerViewModel.kt`: Manages the UI state and scanning logic.
 - `CameraAnalyzer.kt`: Custom CameraX analyzer for processing frames with ML Kit.
 - `ImageReaderUtils.kt`: Utilities for scanning QR codes from static images (URIs).
-- `WifiUtils.kt`: (Placeholder/Utility) for potential future WiFi QR code handling.
 - `ImageReaderUtils.kt`: Helper for decoding QR codes from local storage.

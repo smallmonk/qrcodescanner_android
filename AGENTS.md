@@ -4,13 +4,22 @@
 **QRScanner** is an Android application built with Kotlin and Jetpack Compose. It uses CameraX for camera functionality and Google ML Kit for QR code detection.
 
 ## Current State
-- **Core Functionality**: Live camera scanning and scanning from gallery images are implemented.
-- **UI**: Built with Jetpack Compose. Includes a camera preview with a bounding box, zoom support, and a result dialog.
+- **Core Functionality**: Live camera scanning, scanning from gallery images, and persistent Wi-Fi connectivity are implemented.
+- **UI**: Built with Jetpack Compose. Includes a camera preview with a bounding box, zoom support, and context-aware result dialogs.
 - **Scanning Logic**: 
     - `CameraAnalyzer.kt` handles real-time frames.
     - `ImageReaderUtils.kt` handles static image URI decoding.
     - `ScannerViewModel.kt` manages the state (scanning active, results, dialogs).
-- **Recent Updates**: Added `README.md` and `AGENTS.md`.
+- **Wi-Fi Integration**: 
+    - Targeted for Android 12+ (API 31).
+    - Uses `WifiNetworkSuggestion` for persistent connectivity.
+    - Uses `ACTION_WIFI_ADD_NETWORKS` intent for immediate user-confirmed connection.
+    - Implements `ConnectivityManager.NetworkCallback` with `FLAG_INCLUDE_LOCATION_INFO` for SSID verification.
+- **Recent Updates**: 
+    - Raised `minSdk` to 31.
+    - Implemented robust Wi-Fi connection and verification flow.
+    - Cleaned up legacy code and improved permission handling.
+    - Updated `README.md` and `AGENTS.md`.
 
 ## Key Files & Modules
 - `ScannerScreen.kt`: Main UI, camera preview setup, and permission handling.
@@ -28,7 +37,7 @@
 
 ## Pending / Future Tasks
 - [ ] Implement Scan History.
-- [ ] Enhance WiFi QR code parsing and connection logic (using `WifiUtils.kt`).
+- [x] Enhance WiFi QR code parsing and connection logic.
 - [ ] Add flashlight toggle.
 - [ ] Improve UI/UX (animations, better bounding box).
 

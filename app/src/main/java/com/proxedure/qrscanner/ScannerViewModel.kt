@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.asStateFlow
 data class ScannerState(
     val detectedValue: String? = null,
     val isUrl: Boolean = false,
+    val isWifi: Boolean = false,
     val showDialog: Boolean = false,
     val isScanningEnabled: Boolean = true,
     val isCameraActive: Boolean = true,
@@ -22,9 +23,11 @@ class ScannerViewModel : ViewModel() {
 
     fun onQrCodeDetected(value: String, imageUri: android.net.Uri? = null) {
         val isUrl = Patterns.WEB_URL.matcher(value).matches()
+        val isWifi = value.startsWith("WIFI:", ignoreCase = true)
         _state.value = _state.value.copy(
             detectedValue = value,
             isUrl = isUrl,
+            isWifi = isWifi,
             showDialog = true,
             isScanningEnabled = false,
             isCameraActive = false,
@@ -36,6 +39,7 @@ class ScannerViewModel : ViewModel() {
         _state.value = _state.value.copy(
             detectedValue = null,
             isUrl = false,
+            isWifi = false,
             showDialog = true,
             isScanningEnabled = false,
             isCameraActive = false
@@ -66,6 +70,7 @@ class ScannerViewModel : ViewModel() {
         _state.value = _state.value.copy(
             detectedValue = null,
             isUrl = false,
+            isWifi = false,
             showDialog = false,
             isScanningEnabled = true,
             isCameraActive = true,

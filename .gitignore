@@ -3,3 +3,5 @@
 /.gradle/
 /app/release/
 /app/build/
+/local.properties
+/gradle/wrapper/gradle-wrapper.jar

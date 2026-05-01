@@ -32,6 +32,16 @@ class ScannerViewModel : ViewModel() {
         )
     }
 
+    fun onNoQrCodeDetected() {
+        _state.value = _state.value.copy(
+            detectedValue = null,
+            isUrl = false,
+            showDialog = true,
+            isScanningEnabled = false,
+            isCameraActive = false
+        )
+    }
+
     fun startScanning() {
         _state.value = _state.value.copy(
             isScanningEnabled = true,

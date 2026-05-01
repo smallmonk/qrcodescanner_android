@@ -55,6 +55,8 @@ fun ScannerScreen(
                 ImageReaderUtils.scanQrFromUri(context, uri) { result ->
                     if (result != null) {
                         viewModel.onQrCodeDetected(result, uri)
+                    } else {
+                        viewModel.onNoQrCodeDetected()
                     }
                 }
             }
@@ -154,9 +156,9 @@ fun ScannerScreen(
         }
     }
 
-    if (state.showDialog && state.detectedValue != null) {
+    if (state.showDialog) {
         ResultDialog(
-            content = state.detectedValue!!,
+            content = state.detectedValue ?: "No QR code detected in the selected image.",
             isUrl = state.isUrl,
             onDismiss = {
                 viewModel.clearResult()

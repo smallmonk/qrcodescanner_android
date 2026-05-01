@@ -5,11 +5,12 @@
 
 ## Current State
 - **Core Functionality**: Live camera scanning, scanning from gallery images, and persistent Wi-Fi connectivity are implemented.
-- **UI**: Built with Jetpack Compose. Includes a camera preview with a bounding box, zoom support, and context-aware result dialogs.
+- **UI**: Built with Jetpack Compose. Includes a camera preview with a bounding box, zoom support, and context-aware result dialogs (Open URL, Connect to Wi-Fi, Copy text).
 - **Scanning Logic**: 
     - `CameraAnalyzer.kt` handles real-time frames.
     - `ImageReaderUtils.kt` handles static image URI decoding.
     - `ScannerViewModel.kt` manages the state (scanning active, results, dialogs).
+- **Clipboard Integration**: Allows copying text from detected QR codes that are not URLs or Wi-Fi configurations.
 - **Wi-Fi Integration**: 
     - Targeted for Android 12+ (API 31).
     - Uses `WifiNetworkSuggestion` for persistent connectivity.
@@ -18,6 +19,7 @@
 - **Recent Updates**: 
     - Raised `minSdk` to 31.
     - Implemented robust Wi-Fi connection and verification flow.
+    - Added "Copy" to clipboard functionality for text QR codes.
     - Cleaned up legacy code and improved permission handling.
     - Updated `README.md` and `AGENTS.md`.
 

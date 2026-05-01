@@ -9,6 +9,7 @@ A simple and efficient Android application for scanning QR codes using Jetpack C
 - **Image Import**: Scan QR codes from images stored in your device's gallery.
 - **Pinch-to-Zoom**: Easily zoom in and out during live scanning using scale gestures.
 - **URL Handling**: Automatically detects URLs in QR codes and provides an option to open them in a web browser.
+- **Copy to Clipboard**: For non-URL and non-Wi-Fi QR codes, a "Copy" button is provided to easily copy the text content to the system clipboard.
 - **Interactive UI**:
     - Visual bounding box for targeting QR codes.
     - Start/Stop scanning controls to save battery and processing power.

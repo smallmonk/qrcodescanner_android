@@ -2,6 +2,9 @@ package com.proxedure.qrscanner
 
 import android.Manifest
 import android.app.Activity
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.content.Intent
 import android.view.ScaleGestureDetector
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -256,6 +259,12 @@ fun ScannerScreen(
                     Toast.makeText(context, "Location permission is required to connect to Wi-Fi", Toast.LENGTH_LONG).show()
                     permissionLauncher.launch(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION))
                 }
+            },
+            onCopy = { text ->
+                val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                val clip = ClipData.newPlainText("QR Code Result", text)
+                clipboard.setPrimaryClip(clip)
+                Toast.makeText(context, "Copied to clipboard", Toast.LENGTH_SHORT).show()
             }
         )
     }
@@ -397,7 +406,8 @@ fun ResultDialog(
     isWifi: Boolean,
     onDismiss: () -> Unit,
     onOpenUrl: (String) -> Unit,
-    onConnectWifi: (String) -> Unit
+    onConnectWifi: (String) -> Unit,
+    onCopy: (String) -> Unit
 ) {
     AlertDialog(
         onDismissRequest = onDismiss,
@@ -417,6 +427,11 @@ fun ResultDialog(
                 if (isWifi) {
                     Button(onClick = { onConnectWifi(content) }) {
                         Text("Connect to Wifi")
+                    }
+                }
+                if (!isUrl && !isWifi) {
+                    Button(onClick = { onCopy(content) }) {
+                        Text("Copy")
                     }
                 }
             }

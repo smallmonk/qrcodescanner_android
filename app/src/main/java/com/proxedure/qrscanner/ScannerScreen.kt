@@ -2,12 +2,14 @@ package com.proxedure.qrscanner
 
 import android.Manifest
 import android.content.Intent
+import android.view.ScaleGestureDetector
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.Preview
+import androidx.camera.core.Camera
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.compose.foundation.background
@@ -202,6 +204,25 @@ fun CameraPreview(
     AndroidView(
         factory = { ctx ->
             val previewView = PreviewView(ctx)
+            var camera: Camera? = null
+
+            val scaleGestureDetector = ScaleGestureDetector(ctx, object : ScaleGestureDetector.SimpleOnScaleGestureListener() {
+                override fun onScale(detector: ScaleGestureDetector): Boolean {
+                    camera?.let { cam ->
+                        val zoomState = cam.cameraInfo.zoomState.value
+                        val currentZoomRatio = zoomState?.zoomRatio ?: 1f
+                        cam.cameraControl.setZoomRatio(currentZoomRatio * detector.scaleFactor)
+                    }
+                    return true
+                }
+            })
+
+            previewView.setOnTouchListener { view, event ->
+                scaleGestureDetector.onTouchEvent(event)
+                view.performClick()
+                true
+            }
+
             val cameraProviderFuture = ProcessCameraProvider.getInstance(ctx)
 
             cameraProviderFuture.addListener({
@@ -220,7 +241,7 @@ fun CameraPreview(
 
                 try {
                     cameraProvider.unbindAll()
-                    cameraProvider.bindToLifecycle(
+                    camera = cameraProvider.bindToLifecycle(
                         lifecycleOwner,
                         CameraSelector.DEFAULT_BACK_CAMERA,
                         preview,

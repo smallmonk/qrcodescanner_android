@@ -106,10 +106,10 @@ fun ScannerScreen(
                     handler.postDelayed({
                         if (!isUnregistered) {
                             isUnregistered = true
-                            Toast.makeText(context, "$attemptedSsid is added previously.  Manual switch to it is required.", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, "Manual switch to added $attemptedSsid is required.", Toast.LENGTH_SHORT).show()
                             connectivityManager.unregisterNetworkCallback(callback)
                         }
-                    }, 10000)
+                    }, 6000)
                 }
             }
             viewModel.clearResult()
@@ -307,7 +307,7 @@ private fun connectToWifi(
 
     try {
         launcher.launch(intent)
-        Toast.makeText(context, "Switching to ${config.ssid}...", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, "Switching to ${config.ssid}...", Toast.LENGTH_LONG).show()
     } catch (e: Exception) {
         Toast.makeText(context, "Could not open Wi-Fi settings", Toast.LENGTH_SHORT).show()
     }
